@@ -1,4 +1,6 @@
-node_modules/
-dist/
 .DS_Store
 *.log
+.vite/
+
+# Ficheros del juego descargados con descargar-juego.sh (~370 MB)
+geo/

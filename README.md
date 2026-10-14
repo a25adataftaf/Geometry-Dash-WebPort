@@ -1,32 +1,92 @@
-# Geometry Dash Web Port (fan-made)
+# Geometry Dash · Web Port (fan-made)
 
-Pantalla de entrada web para el port de Geometry Dash de Ale7208. El usuario solicitante indica que cuenta con permiso del autor para reutilizar su webport. Este proyecto no es oficial ni está afiliado a RobTop Games.
+**La web está publicada y se juega desde el navegador, sin instalar nada:**
+
+### 👉 https://a25adataftaf.github.io/Geometry-Dash-WebPort/
+
+Se abre en Chrome o Edge, se pulsa **JUGAR** y listo. No hay que descargar el
+proyecto, ni compilar, ni ejecutar nada en el ordenador.
+
+> Proyecto fan-made. Geometry Dash y sus recursos son de **RobTop Games**. Este
+> repositorio no está afiliado ni patrocinado por RobTop, itch.io ni los autores
+> del port.
 
 ## Cómo funciona
 
-- **Load** abre `public/geometry-dash-webport.html`, basado en [Ale7208/Geometry-Dash-webport](https://github.com/Ale7208/Geometry-Dash-webport).
-- El HTML no contiene el juego completo: descarga el runtime y los datos desde [Ale7208/geometry-dash-web](https://github.com/Ale7208/geometry-dash-web), fijado al commit `29a2eb7683ed7d9a7a9ba9a171df236e1dfb6933`.
-- La descarga inicial de los ficheros `.data` y `.wasm` ronda los **367 MiB**; hace falta conexión a Internet y WebGL 2. El navegador puede conservar parte de los datos en caché.
-- Las funciones en línea envían peticiones a través del Worker de Ale7208. No inicies sesión con una cuenta personal en esta build; no controlamos ni auditamos ese servicio.
-- El binario y los datos del juego se sirven desde el repositorio externo; no están incluidos en este Git ni en `dist/`.
+- **GitHub Pages** publica esta carpeta tal cual: son ficheros estáticos
+  (`index.html`, `styles.css`, `app.js`, `favicon.svg`, `fuentes/` y `play/`).
+  No hay build ni dependencias que instalar.
+- Al pulsar **JUGAR** se abre el webport de `play/`, que pide el motor y los
+  datos del juego (**~370 MB**) al CDN de GitHub (`cdn.jsdelivr.net`),
+  apuntando al repositorio
+  [AlexBoops/geometry-dash-webport](https://github.com/AlexBoops/geometry-dash-webport)
+  con el commit fijado `c6ac941`.
+- El progreso de la partida se guarda en el propio navegador (IndexedDB), no en
+  ningún servidor.
 
-## Ejecutar y compilar
+## Qué hay dentro
 
-Requiere Node.js 20 o posterior.
-
-```bash
-npm install
-npm run dev
+```
+index.html            pantalla de entrada (hero, requisitos, cómo jugar, créditos)
+styles.css            estilos del sitio (tipografías locales de ./fuentes/)
+app.js                lógica de la entrada: lanzar el juego, avisos, estado de los datos
+favicon.svg           icono (cubo)
+fuentes/              tipografías Press Start 2P y Kalam (licencias incluidas)
+play/                 EL JUEGO
+  index.html            webport (motor de bog @ truffled, ficheros de AlexBoops)
+  gd_web.js             módulo del motor (Emscripten/WASM), copia local
+  sw.js                 service worker del port (reensambla gd_web.data)
+  logo.png, load.png, fondo_gd.jpg
+descargar-juego.sh    (opcional) baja los ~370 MB de datos a geo/
+.nojekyll             para que GitHub Pages sirva los ficheros tal cual
 ```
 
-Para generar el sitio estático:
+## Publicación (GitHub Pages)
+
+Settings → **Pages** → *Deploy from a branch* → rama **main**, carpeta **/ (root)**.
+Al hacer push a `main`, Pages actualiza la web solo en un par de minutos.
+
+## Opcional: los ficheros del juego en local
+
+Solo si algún día quieres jugar sin depender del CDN, o publicar los datos en tu
+propio servidor. En la web online no hace falta: siempre tira del CDN.
 
 ```bash
-npm run build
+bash descargar-juego.sh            # baja lo que falte a geo/
+bash descargar-juego.sh --forzar   # lo vuelve a bajar todo
 ```
 
-La carpeta `dist/` contiene el splash, el cargador y las tipografías locales. Al jugar, el cargador necesita acceso a los servidores externos descritos arriba.
+Si los ficheros están en `geo/`, el port los usa automáticamente y lo indica en
+su pantalla de inicio. También puedes forzarlo con `?local=1` o `?cdn=1`.
+`geo/` está en `.gitignore` (son ~370 MB, no deben subirse al repositorio).
 
-## Atribución
+## Adaptaciones sobre el port original
 
-El HTML del webport procede de Ale7208 y se incluye según el permiso indicado por el solicitante. Geometry Dash y sus recursos originales pertenecen a sus respectivos titulares. El resto de este repositorio configura una pantalla de entrada y una compilación web para abrir ese port.
+`play/index.html` parte de la versión guardada del port original y lleva estos
+cambios:
+
+- rutas relativas en logo, fondo y módulo del motor (funciona en un
+  subdirectorio como `/Geometry-Dash-WebPort/`);
+- fuera **Google Tag Manager** y el script anti-hotlink de itch.io;
+- CDN configurable y **commit fijado** en vez de `@main`;
+- **modo local** (`geo/`) y parámetros `?local=1` / `?cdn=1`;
+- avisos si falta **JSPI** o **WebGL 2**, enlace «Volver al inicio» y nota de la
+  fuente de datos que se está usando.
+
+## Requisitos para jugar
+
+- Chrome o Edge actualizados, con **JSPI** activo
+  (`chrome://flags` → *Experimental WebAssembly JavaScript Promise Integration*).
+- **WebGL 2** con aceleración por hardware.
+- Primera carga de **~370 MB** (después el navegador los conserva en caché).
+- **No inicies sesión** con tu cuenta: las funciones en línea pasan por un proxy
+  de terceros que no controlamos.
+
+## Créditos
+
+- **Motor y port del juego:** bog @ [truffled](https://truffled.lol).
+- **Empaquetado web y ficheros del juego:** [AlexBoops/geometry-dash-webport](https://github.com/AlexBoops/geometry-dash-webport).
+- **Port original publicado en itch.io:** [Geometry Dash | Webport](https://theblehlollipop.itch.io/geometry-dash-webport).
+- **Geometry Dash:** [RobTop Games](https://www.robtopgames.com/). Todos los derechos reservados.
+
+Si eres titular de algún contenido y prefieres que se retire, abre un issue y se quita.

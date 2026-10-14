@@ -3,27 +3,215 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#07558b" />
-    <meta name="description" content="Geometry Dash Web Port 2.2081: build fan-made para navegador." />
-    <title>Geometry Dash — Web Port fan-made</title>
+    <meta name="theme-color" content="#0a0a1f" />
+    <meta
+      name="description"
+      content="Geometry Dash en el navegador: webport fan-made con los ficheros del juego servidos desde GitHub. Sin instalar nada."
+    />
+    <title>Geometry Dash · Web Port (fan-made)</title>
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="splash-screen" aria-label="Geometry Dash Web Port">
-      <div class="splash-haze" aria-hidden="true"></div>
-      <div class="splash-panels" aria-hidden="true">
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span>
-      </div>
-      <div class="splash-content">
-        <div class="splash-brand">
-          <h1 class="splash-logo"><span>GEOMETRY</span><span>DASH</span></h1>
-          <p class="splash-handwriting">Web Port</p>
+    <div class="sky" aria-hidden="true">
+      <span class="sky-stripe"></span>
+      <span class="sky-glow sky-glow--green"></span>
+      <span class="sky-glow sky-glow--blue"></span>
+      <span class="sky-cube sky-cube--one"></span>
+      <span class="sky-cube sky-cube--two"></span>
+      <span class="sky-cube sky-cube--three"></span>
+      <span class="sky-grid"></span>
+    </div>
+
+    <header class="topbar">
+      <a class="brand" href="./">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" focusable="false">
+            <rect x="7" y="7" width="50" height="50" rx="9" fill="#0d1f06" />
+            <rect x="11" y="11" width="42" height="42" rx="7" fill="#6ee83c" />
+            <rect x="11" y="11" width="42" height="13" rx="7" fill="#8df75a" />
+            <rect x="11" y="41" width="42" height="12" rx="6" fill="#4fbe28" opacity=".85" />
+            <rect x="19" y="21" width="11" height="15" rx="4" fill="#f4ffe9" />
+            <rect x="34" y="21" width="11" height="15" rx="4" fill="#f4ffe9" />
+            <rect x="22" y="26" width="6" height="7" rx="2.5" fill="#0d1f06" />
+            <rect x="37" y="26" width="6" height="7" rx="2.5" fill="#0d1f06" />
+          </svg>
+        </span>
+        <span class="brand-text">
+          <strong>Geometry Dash</strong>
+          <small>Web Port · fan-made</small>
+        </span>
+      </a>
+      <nav class="topnav" aria-label="Secciones">
+        <a href="#jugar">Jugar</a>
+        <a href="#requisitos">Requisitos</a>
+        <a href="#como">Cómo jugar</a>
+        <a href="#ficheros">Ficheros</a>
+        <a href="#creditos">Créditos</a>
+        <a
+          class="topnav-gh"
+          href="https://github.com/AlexBoops/geometry-dash-webport"
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub</a
+        >
+      </nav>
+    </header>
+
+    <main>
+      <section id="jugar" class="hero">
+        <p class="tag">FAN-MADE · WEBPORT 2.2 · SIN INSTALAR NADA</p>
+        <h1 class="hero-title">
+          <span class="hero-title-line">GEOMETRY</span>
+          <span class="hero-title-line hero-title-line--dash">DASH</span>
+        </h1>
+        <p class="hero-hand">Web Port</p>
+        <p class="hero-lead">
+          Cubo, pinchos y música a todo volumen: el webport que se juega directo en el navegador.
+          Los ficheros del juego se descargan desde un repositorio de GitHub, así que no hay nada
+          que instalar.
+        </p>
+
+        <div class="hero-actions">
+          <button class="play-button" id="play-button" type="button">
+            <span class="play-button-inner">
+              <span class="play-button-label" id="play-button-label">JUGAR</span>
+            </span>
+          </button>
+          <a class="ghost-button" href="#requisitos">Ver requisitos</a>
         </div>
-        <button class="load-button" id="load-button" type="button">Load</button>
-        <p class="splash-footnote">FAN-MADE · BUILD 2.2081 · PRIMERA CARGA ≈370 MiB · NO INICIES SESIÓN</p>
-      </div>
+
+        <ul class="hero-facts">
+          <li>~370 MB la primera carga</li>
+          <li>Chrome / Edge con JSPI</li>
+          <li>Progreso guardado en el navegador</li>
+        </ul>
+
+        <div class="banner banner--warn" id="status-banner" role="status" hidden></div>
+      </section>
+
+      <section id="requisitos" class="section">
+        <h2 class="section-title">Antes de jugar</h2>
+        <div class="cards">
+          <article class="card">
+            <h3>Navegador</h3>
+            <p>
+              Chrome o Edge actualizados. El juego usa <strong>JSPI</strong> (WebAssembly con
+              promesas); si no arranca, entra en <code>chrome://flags</code>, activa
+              <em>Experimental WebAssembly JavaScript Promise Integration (JSPI)</em> y reinicia el
+              navegador.
+            </p>
+          </article>
+          <article class="card">
+            <h3>WebGL 2</h3>
+            <p>
+              Hace falta aceleración por hardware. En Windows: <em>Ajustes → Sistema → Pantalla →
+              Gráficos</em> y deja que Chrome use la GPU. Sin WebGL 2 el lienzo se queda en negro.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Descarga inicial</h3>
+            <p>
+              El motor y sus datos pesan unos <strong>370 MB</strong> en total. Se bajan la primera
+              vez (por trozos), así que dale un poco y no cierres la pestaña en mitad de las barras
+              WASM / DATA.
+            </p>
+          </article>
+          <article class="card card--warn">
+            <h3>No inicies sesión</h3>
+            <p>
+              Las funciones en línea (cuentas, niveles, listas) pasan por un proxy de terceros que
+              no controlamos. Juega en local y no metas tus contraseñas.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="como" class="section">
+        <h2 class="section-title">Cómo jugar</h2>
+        <ol class="steps">
+          <li><span class="step-num">1</span> Pulsa <strong>JUGAR</strong> y espera la pantalla del webport.</li>
+          <li><span class="step-num">2</span> Toca el botón <strong>LOAD</strong> del centro de la pantalla.</li>
+          <li>
+            <span class="step-num">3</span> Mira las barras <strong>WASM</strong> y <strong>DATA</strong>: son
+            los 370 MB de la primera vez. Cuando terminen, el juego arranca solo.
+          </li>
+          <li>
+            <span class="step-num">4</span> En el juego: <kbd>Espacio</kbd>, <kbd>↑</kbd>, clic o toque para
+            saltar. En la barra inferior tienes pantalla completa, FPS y <em>Clear cache</em>.
+          </li>
+        </ol>
+        <p class="note">
+          Si algo va raro, abre el port con <code>?debug</code> al final de la URL (por ejemplo
+          <code>play/?debug</code>) para ver la consola del motor.
+        </p>
+      </section>
+
+      <section id="ficheros" class="section">
+        <h2 class="section-title">Los ficheros del juego</h2>
+        <p>
+          No hay que descargar ni instalar nada: el port pide el motor y los datos al CDN de GitHub
+          (<code>cdn.jsdelivr.net</code>), apuntando al repositorio
+          <a
+            href="https://github.com/AlexBoops/geometry-dash-webport"
+            target="_blank"
+            rel="noopener noreferrer"
+            >AlexBoops/geometry-dash-webport</a
+          >. Esa es la descarga de ~370 MB de la primera partida; después queda en la caché del
+          navegador.
+        </p>
+        <p>
+          La web está publicada en <strong>GitHub Pages</strong>, así que se abre desde cualquier
+          navegador con solo entrar en la dirección. Si quien la mantiene quiere además tener los
+          ficheros en su servidor (modo sin CDN), el repositorio incluye
+          <code>descargar-juego.sh</code>, que los baja a la carpeta <code>geo/</code> y el port los
+          detecta solo (<code>?local=1</code> / <code>?cdn=1</code> para forzar).
+        </p>
+        <p class="status" id="local-status">Comprobando de dónde se van a cargar los datos…</p>
+      </section>
+
+      <section id="creditos" class="section">
+        <h2 class="section-title">Créditos</h2>
+        <ul class="credits">
+          <li>
+            <strong>Motor y port del juego:</strong> bog @
+            <a href="https://truffled.lol" target="_blank" rel="noopener noreferrer">truffled</a>.
+          </li>
+          <li>
+            <strong>Empaquetado web y ficheros del juego:</strong>
+            <a
+              href="https://github.com/AlexBoops/geometry-dash-webport"
+              target="_blank"
+              rel="noopener noreferrer"
+              >AlexBoops/geometry-dash-webport</a
+            >.
+          </li>
+          <li>
+            <strong>Port original publicado en itch.io:</strong>
+            <a
+              href="https://theblehlollipop.itch.io/geometry-dash-webport"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Geometry Dash | Webport</a
+            >.
+          </li>
+          <li><strong>Geometry Dash:</strong> RobTop Games. Todos los derechos reservados.</li>
+        </ul>
+        <p class="disclaimer">
+          Este proyecto solo monta la web y el lanzador alrededor del webport. No está afiliado ni
+          patrocinado por RobTop Games, itch.io ni los autores del port. Si eres titular de algún
+          contenido y quieres que se retire, abre un issue y lo quitamos.
+        </p>
+      </section>
     </main>
-    <script type="module" src="./src/main.js"></script>
+
+    <footer class="footer">
+      <p><strong>Geometry Dash · Web Port</strong> · fan-made, motor de bog @ truffled · ficheros desde GitHub</p>
+      <p class="footer-small">
+        Hecho para jugar en el navegador. Sin ánimo de lucro · <span id="year"></span>
+      </p>
+    </footer>
+
+    <script src="./app.js" defer></script>
   </body>
 </html>
