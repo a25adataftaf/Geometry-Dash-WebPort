@@ -43,8 +43,14 @@ descargar-juego.sh    (opcional) baja los ~370 MB de datos a geo/
 
 ## Publicación (GitHub Pages)
 
-Settings → **Pages** → *Deploy from a branch* → rama **main**, carpeta **/ (root)**.
-Al hacer push a `main`, Pages actualiza la web solo en un par de minutos.
+La web se sirve desde el propio repositorio, sin compilar y sin workflows. En
+GitHub: **Settings → Pages → Source: *Deploy from a branch* → Branch `main` /
+`/ (root)` → Save**. En un par de minutos queda publicada y cada push a `main`
+la actualiza sola.
+
+> Si el repositorio es **privado**, GitHub Pages necesita un plan de pago
+> (Pro/Team/Enterprise). Para publicarlo gratis, el repositorio tiene que ser
+> **público** (Settings → General → Danger zone → Change visibility).
 
 ## Opcional: los ficheros del juego en local
 
