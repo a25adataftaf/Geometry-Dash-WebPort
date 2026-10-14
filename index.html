@@ -3,38 +3,50 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0d0718" />
+    <meta name="theme-color" content="#0a0a1f" />
     <meta
       name="description"
-      content="Geometry Dash Webport para navegador: el port de Lollipop, con los ficheros del juego servidos desde GitHub. Fan-made, sin instalación."
+      content="Geometry Dash en el navegador: webport fan-made con los ficheros del juego servidos desde GitHub. Sin instalar nada."
     />
-    <title>Geometry Dash Webport · port de Lollipop (fan-made)</title>
+    <title>Geometry Dash · Web Port (fan-made)</title>
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div class="candy-sky" aria-hidden="true">
-      <span class="candy-stripe"></span>
-      <span class="candy-glow candy-glow--pink"></span>
-      <span class="candy-glow candy-glow--violet"></span>
-      <span class="candy-lolli candy-lolli--one"><i></i></span>
-      <span class="candy-lolli candy-lolli--two"><i></i></span>
-      <span class="candy-lolli candy-lolli--three"><i></i></span>
-      <span class="candy-grid"></span>
+    <div class="sky" aria-hidden="true">
+      <span class="sky-stripe"></span>
+      <span class="sky-glow sky-glow--green"></span>
+      <span class="sky-glow sky-glow--blue"></span>
+      <span class="sky-cube sky-cube--one"></span>
+      <span class="sky-cube sky-cube--two"></span>
+      <span class="sky-cube sky-cube--three"></span>
+      <span class="sky-grid"></span>
     </div>
 
     <header class="topbar">
       <a class="brand" href="./">
-        <span class="brand-mark" aria-hidden="true"><i></i></span>
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" focusable="false">
+            <rect x="7" y="7" width="50" height="50" rx="9" fill="#0d1f06" />
+            <rect x="11" y="11" width="42" height="42" rx="7" fill="#6ee83c" />
+            <rect x="11" y="11" width="42" height="13" rx="7" fill="#8df75a" />
+            <rect x="11" y="41" width="42" height="12" rx="6" fill="#4fbe28" opacity=".85" />
+            <rect x="19" y="21" width="11" height="15" rx="4" fill="#f4ffe9" />
+            <rect x="34" y="21" width="11" height="15" rx="4" fill="#f4ffe9" />
+            <rect x="22" y="26" width="6" height="7" rx="2.5" fill="#0d1f06" />
+            <rect x="37" y="26" width="6" height="7" rx="2.5" fill="#0d1f06" />
+          </svg>
+        </span>
         <span class="brand-text">
-          <strong>Lollipop Webport</strong>
-          <small>Geometry Dash en el navegador</small>
+          <strong>Geometry Dash</strong>
+          <small>Web Port · fan-made</small>
         </span>
       </a>
       <nav class="topnav" aria-label="Secciones">
         <a href="#jugar">Jugar</a>
         <a href="#requisitos">Requisitos</a>
         <a href="#como">Cómo jugar</a>
-        <a href="#local">Modo local</a>
+        <a href="#ficheros">Ficheros</a>
         <a href="#creditos">Créditos</a>
         <a
           class="topnav-gh"
@@ -53,11 +65,11 @@
           <span class="hero-title-line">GEOMETRY</span>
           <span class="hero-title-line hero-title-line--dash">DASH</span>
         </h1>
-        <p class="hero-hand">port de <em>Lollipop</em></p>
+        <p class="hero-hand">Web Port</p>
         <p class="hero-lead">
-          Cubo, pinchos, y la música a todo volumen: el webport que se juega directo en el
-          navegador. Todos los ficheros del juego se sirven desde GitHub, así que no hay nada que
-          instalar.
+          Cubo, pinchos y música a todo volumen: el webport que se juega directo en el navegador.
+          Los ficheros del juego se descargan desde un repositorio de GitHub, así que no hay nada
+          que instalar.
         </p>
 
         <div class="hero-actions">
@@ -94,14 +106,14 @@
             <h3>WebGL 2</h3>
             <p>
               Hace falta aceleración por hardware. En Windows: <em>Ajustes → Sistema → Pantalla →
-              Gráficos</em> y deja que Chrome use la GPU. Sin WebGL 2 el canvas se queda en negro.
+              Gráficos</em> y deja que Chrome use la GPU. Sin WebGL 2 el lienzo se queda en negro.
             </p>
           </article>
           <article class="card">
             <h3>Descarga inicial</h3>
             <p>
-              El runtime pesa unos <strong>370 MB</strong> (data + wasm en trozos). Se descarga la
-              primera vez, así que dale un poco y no cierres la pestaña en mitad de las barras
+              El motor y sus datos pesan unos <strong>370 MB</strong> en total. Se bajan la primera
+              vez (por trozos), así que dale un poco y no cierres la pestaña en mitad de las barras
               WASM / DATA.
             </p>
           </article>
@@ -121,32 +133,41 @@
           <li><span class="step-num">1</span> Pulsa <strong>JUGAR</strong> y espera la pantalla del webport.</li>
           <li><span class="step-num">2</span> Toca el botón <strong>LOAD</strong> del centro de la pantalla.</li>
           <li>
-            <span class="step-num">3</span> Mira las barras <strong>WASM</strong> y <strong>DATA</strong>: son los
-            370 MB de la primera vez. Luego arranca el juego solo.
+            <span class="step-num">3</span> Mira las barras <strong>WASM</strong> y <strong>DATA</strong>: son
+            los 370 MB de la primera vez. Cuando terminen, el juego arranca solo.
           </li>
           <li>
             <span class="step-num">4</span> En el juego: <kbd>Espacio</kbd>, <kbd>↑</kbd>, clic o toque para
-            saltar. En la barra de abajo tienes pantalla completa, FPS y <em>Clear cache</em>.
+            saltar. En la barra inferior tienes pantalla completa, FPS y <em>Clear cache</em>.
           </li>
         </ol>
         <p class="note">
           Si algo va raro, abre el port con <code>?debug</code> al final de la URL (por ejemplo
-          <code>/play/?debug</code>) para ver la consola del motor.
+          <code>play/?debug</code>) para ver la consola del motor.
         </p>
       </section>
 
-      <section id="local" class="section">
-        <h2 class="section-title">Modo local (sin CDN)</h2>
+      <section id="ficheros" class="section">
+        <h2 class="section-title">Ficheros del juego (CDN o locales)</h2>
         <p>
-          Por defecto el port baja los ficheros desde el CDN de GitHub (jsDelivr). Si prefieres
-          tenerlos en tu equipo —para jugar sin depender de internet o para publicarlos tú— hay un
-          script que los trae todos:
+          Por defecto el port pide los ficheros al CDN de GitHub (<code>cdn.jsdelivr.net</code>),
+          apuntando al repositorio
+          <a
+            href="https://github.com/AlexBoops/geometry-dash-webport"
+            target="_blank"
+            rel="noopener noreferrer"
+            >AlexBoops/geometry-dash-webport</a
+          >. Con eso ya puedes jugar sin descargar nada aparte.
         </p>
-        <pre class="code-block"><code>npm run juego:descargar</code></pre>
         <p>
-          Los guarda en <code>public/geo/</code> (no se suben a Git) y el port detecta solo si están
-          ahí: verás «ficheros locales» en la pantalla de inicio y ya no tocará el CDN durante la
-          partida.
+          Si quieres tenerlos en tu equipo (para jugar sin CDN o para publicarlos tú), hay un script
+          que los baja a la carpeta <code>geo/</code>:
+        </p>
+        <pre class="code-block"><code>bash descargar-juego.sh</code></pre>
+        <p>
+          El port detecta solo esa carpeta: verás «ficheros locales» en su pantalla de inicio y ya
+          no tocará el CDN durante la partida. También puedes forzarlo con
+          <code>?local=1</code> o <code>?cdn=1</code>.
         </p>
         <p class="status" id="local-status">Comprobando si tienes los ficheros locales…</p>
       </section>
@@ -168,35 +189,31 @@
             >.
           </li>
           <li>
-            <strong>Port publicado en itch.io:</strong>
+            <strong>Port original publicado en itch.io:</strong>
             <a
               href="https://theblehlollipop.itch.io/geometry-dash-webport"
               target="_blank"
               rel="noopener noreferrer"
-              >Geometry Dash | Webport by Lollipop</a
+              >Geometry Dash | Webport</a
             >.
           </li>
           <li><strong>Geometry Dash:</strong> RobTop Games. Todos los derechos reservados.</li>
         </ul>
         <p class="disclaimer">
-          Este repositorio solo monta la web y el lanzador alrededor del webport. No está afiliado
-          ni patrocinado por RobTop Games, itch.io, Lollipop, AlexBoops ni truffled. Si eres
-          titular de algún contenido y quieres que se retire, abre un issue y lo quitamos.
+          Este proyecto solo monta la web y el lanzador alrededor del webport. No está afiliado ni
+          patrocinado por RobTop Games, itch.io ni los autores del port. Si eres titular de algún
+          contenido y quieres que se retire, abre un issue y lo quitamos.
         </p>
       </section>
     </main>
 
     <footer class="footer">
-      <p>
-        <strong>Geometry Dash Webport</strong> · webport de Lollipop · motor de bog @ truffled ·
-        ficheros desde GitHub
-      </p>
+      <p><strong>Geometry Dash · Web Port</strong> · fan-made, motor de bog @ truffled · ficheros desde GitHub</p>
       <p class="footer-small">
-        Hecho para jugar en el navegador. Proyecto fan-made sin ánimo de lucro ·
-        <span id="year"></span>
+        Hecho para jugar en el navegador. Sin ánimo de lucro · <span id="year"></span>
       </p>
     </footer>
 
-    <script type="module" src="./src/main.js"></script>
+    <script src="./app.js" defer></script>
   </body>
 </html>

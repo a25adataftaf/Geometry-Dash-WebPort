@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <!--
-  Geometry Dash Webport para navegador
-  Motor y juego portado: bog @ truffled (truffled.lol)
-  Empaquetado web (GitHub): AlexBoops/geometry-dash-webport
-  Port publicado en itch.io: Lollipop (theblehlollipop.itch.io/geometry-dash-webport)
+  Geometry Dash webport para navegador
+  Motor y port del juego: bog @ truffled (truffled.lol)
+  Empaquetado web y ficheros: github.com/AlexBoops/geometry-dash-webport
+  Port original publicado en itch.io: theblehlollipop.itch.io/geometry-dash-webport
 
-  Esta copia esta adaptada para este sitio: rutas relativas, sin Google Tag Manager,
-  sin el script de proteccion anti-hotlink de itch.io, CDN configurable y soporte para
-  jugar con los ficheros locales de ./geo/ (npm run juego:descargar).
-  Geometry Dash y sus recursos son propiedad de RobTop Games. Proyecto fan-made sin afiliacion.
+  Adaptado para este sitio (web estatica, sin build ni Node):
+  rutas relativas, sin Google Tag Manager, sin el script anti-hotlink de itch.io,
+  CDN configurable con commit fijado y modo local desde la carpeta ./geo/.
+  Geometry Dash y sus recursos son propiedad de RobTop Games. Fan-made sin afiliacion.
 -->
 <html>
 <head>
@@ -18,8 +18,8 @@
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="./logo.png">
-<title>Geometry Dash Webport · port de Lollipop</title>
-<meta name="description" content="Geometry Dash 2.2 en el navegador. Motor de bog @ truffled, empaquetado web de AlexBoops y port publicado por Lollipop. Fan-made, sin afiliacion con RobTop Games.">
+<title>Geometry Dash · Web Port (fan-made)</title>
+<meta name="description" content="Geometry Dash 2.2 en el navegador: webport fan-made con el motor de bog @ truffled y los ficheros del juego servidos desde GitHub.">
 
 <!-- SERVICE WORKER REGISTRATION (SAFE FOR IFRAMES & SANDBOXES) -->
 <script>
@@ -42,15 +42,15 @@
      (unos 370 MiB en total). Por defecto se descargan por trozos desde el CDN de
      jsDelivr, apuntando al repositorio de GitHub que tiene todos los archivos.
 
-     Modo local (sin CDN y sin conexion): descarga los ficheros con
-       npm run juego:descargar
-     y quedaran en ./geo/. Si estan ahi, se usan automaticamente.
+     Modo local (sin CDN y sin conexion): ejecuta el script de la raiz del sitio
+       bash descargar-juego.sh
+     deja los ficheros en geo/. Si estan ahi, se usan automaticamente.
      Parametros de la URL: ?local=1 fuerza ./geo/ y ?cdn=1 fuerza el CDN.
      ------------------------------------------------------------------ */
   window.__GD_CONFIG = {
     repo: "AlexBoops/geometry-dash-webport",
     ref: "c6ac9417ff93ea957425b23ee87f1ed290663ebb",
-    localDir: "./geo/",
+    localDir: "../geo/",
     module: "./gd_web.js"
   };
   window.__CDN_BASE = "https://cdn.jsdelivr.net/gh/" + window.__GD_CONFIG.repo + "@" + window.__GD_CONFIG.ref + "/";
@@ -343,7 +343,7 @@ html{background:#000;}body{margin:0;height:100%;color:#ddd;font-family:monospace
     <div id="fps"><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.2" y="2" width="13.6" height="9" rx="1.6" fill="none" stroke="#888" stroke-width="1.4"></rect><rect x="6.5" y="12" width="3" height="2" fill="#888"></rect><rect x="4.5" y="14.2" width="7" height="1.3" rx="0.6" fill="#888"></rect></svg><span id="fpsval">-- fps</span></div>
     <button id="fsBtn" type="button">Fullscreen</button>
     <button id="clearBtn" type="button" title="Delete saved progress and login">Clear cache</button>
-    <span id="credit">from bog, &lt;3 · port de Lollipop</span>
+    <span id="credit">from bog, &lt;3</span>
   </div>
   <div id="console" style="display: none;"></div>
 </div>
@@ -1013,7 +1013,7 @@ document.addEventListener('keydown', function (e) {
     var note = document.getElementById('srcNote');
     if (!note) return;
     note.innerHTML = (window.__GD_SOURCE === "local")
-      ? 'Fuente: ficheros locales de <b>./geo/</b> (sin CDN) — ~370 MB — Chrome/Edge con JSPI'
+      ? 'Fuente: ficheros locales de <b>geo/</b> (sin CDN) — ~370 MB — Chrome/Edge con JSPI'
       : 'Fuente: CDN de GitHub (' + window.__GD_CONFIG.repo + ') — ~370 MB — Chrome/Edge con JSPI';
   }
   window.__gdSourceChanged = sourceNote;

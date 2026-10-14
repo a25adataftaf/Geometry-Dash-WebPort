@@ -1,88 +1,77 @@
-# Geometry Dash Webport · port de Lollipop (fan-made)
+# Geometry Dash · Web Port (fan-made)
 
-Web para jugar al **Geometry Dash Webport** en el navegador. Es el port que
-publicó **Lollipop** en itch.io (motor y juego portado por **bog @ truffled**,
-ficheros servidos desde el repositorio de **AlexBoops**), montado aquí con una
-pantalla de entrada propia y un lanzador.
+Web estática para jugar al **Geometry Dash Webport** en el navegador. No
+necesita Node, ni compilación, ni instalar nada: son ficheros HTML, CSS y JS que
+se abren tal cual (con el juego descargando sus datos desde GitHub).
 
 > Proyecto fan-made. Geometry Dash y sus recursos son de **RobTop Games**. Este
-> repositorio no está afiliado ni patrocinado por RobTop, itch.io, Lollipop,
-> AlexBoops ni truffled.
+> repositorio no está afiliado ni patrocinado por RobTop, itch.io ni los autores
+> del port.
 
 ## Qué hay dentro
 
 ```
-index.html                 pantalla de entrada (hero, requisitos, créditos…)
-src/main.js                lógica de la entrada: lanzar el juego, avisos, modo local
-src/style.css              estilos del sitio
-favicon.svg                piruleta
-public/play/index.html     EL JUEGO: webport de Lollipop (motor de bog @ truffled)
-public/play/gd_web.js      módulo del motor (Emscripten/WASM), copia local
-public/play/sw.js          service worker del port (reensambla gd_web.data)
-public/play/logo.png       logo del juego
-public/play/load.png       botón LOAD del juego
-public/play/fondo_gd.jpg   fondo animado del juego
-public/geo/                (opcional) los ~370 MB de datos, para jugar sin CDN
-scripts/descargar-juego.mjs  trae esos datos a public/geo/
+index.html            pantalla de entrada (hero, requisitos, cómo jugar, créditos)
+styles.css            estilos del sitio (tipografías locales de ./fuentes/)
+app.js                lógica de la entrada: lanzar el juego, avisos, modo local
+favicon.svg           icono (cubo)
+fuentes/              tipografías Press Start 2P y Kalam (licencias incluidas)
+play/                 EL JUEGO
+  index.html            webport (motor de bog @ truffled, ficheros de AlexBoops)
+  gd_web.js             módulo del motor (Emscripten/WASM), copia local
+  sw.js                 service worker del port (reensambla gd_web.data)
+  logo.png, load.png, fondo_gd.jpg
+geo/                  (opcional, no está en Git) los ~370 MB de datos del juego
+descargar-juego.sh    script que trae esos datos a geo/ con curl o wget
 ```
 
-El juego completo pesa unos **370 MB** (`gd_web.data.part1..16` y
-`gd_web.wasm.part1..4`), así que no vive en Git: se descarga por trozos desde el
-CDN de jsDelivr apuntando a GitHub, o en local con el script de abajo. El CDN
-acepta un commit concreto, por eso `ref` va fijado a un SHA y no a `main`.
+## Cómo se usa
 
-## Ejecutar
-
-Requiere Node.js 20 o posterior.
+Súbelo a cualquier hosting estático (GitHub Pages, Netlify, un servidor Apache…)
+o ábrelo en local con un servidor sencillo:
 
 ```bash
-npm install
-npm run dev
+python3 -m http.server 5173      # y entra en http://localhost:5173
 ```
 
-Para generar el sitio estático:
-
-```bash
-npm run build     # deja todo en dist/
-npm run preview
-```
+No lo abras con doble clic (`file://`): el juego necesita `http(s)` para el
+service worker y para descargar los datos. **No hace falta npm ni compilar nada.**
 
 ## Los ficheros del juego
 
-Por defecto `public/play/index.html` los pide al CDN:
+Por defecto `play/index.html` los pide al CDN de jsDelivr apuntando al
+repositorio de GitHub que los tiene todos:
 
 ```js
 window.__GD_CONFIG = {
   repo: "AlexBoops/geometry-dash-webport",
   ref: "c6ac9417ff93ea957425b23ee87f1ed290663ebb", // commit fijado
-  localDir: "./geo/",
+  localDir: "../geo/",
   module: "./gd_web.js"
 };
 ```
 
-Para jugar sin CDN (o publicarlos tú):
+Para jugar sin CDN (o si quieres publicarlos tú):
 
 ```bash
-npm run juego:descargar          # trae lo que falte a public/geo/
-npm run juego:descargar -- --forzar
+bash descargar-juego.sh            # baja lo que falte a geo/
+bash descargar-juego.sh --forzar   # lo vuelve a bajar todo
 ```
 
-Si los ficheros están en `public/geo/`, el port los usa automáticamente y lo
-indica en la pantalla de inicio. También puedes forzarlo con los parámetros de
-URL `?local=1` o `?cdn=1`.
+Si los ficheros están en `geo/`, el port los usa automáticamente y lo indica en
+su pantalla de inicio. También puedes forzarlo con `?local=1` o `?cdn=1`.
 
 ## Adaptaciones sobre el port original
 
-`public/play/index.html` parte de la versión guardada del port de Lollipop y
-lleva estos cambios:
+`play/index.html` parte de la versión guardada del port original y lleva estos
+cambios:
 
-- rutas relativas en logo, fondo y módulo del motor (nada de depender de rutas absolutas);
-- fuera **Google Tag Manager** (`js(1)` + snippet `gtag`, contenedor `G-PXHK7Q7G3Z`);
-- fuera el script anti-hotlink de itch.io (`htmlgame.js`), que redirigía fuera del sitio;
-- URL del CDN configurable y **commit fijado** en vez de `@main`;
-- detección de **modo local** y parámetros `?local=1` / `?cdn=1`;
-- avisos en pantalla si falta **JSPI** o **WebGL 2**, enlace «Volver al inicio»
-  y nota de la fuente de datos que se está usando.
+- rutas relativas en logo, fondo y módulo del motor;
+- fuera **Google Tag Manager** y el script anti-hotlink de itch.io;
+- CDN configurable y **commit fijado** en vez de `@main`;
+- **modo local** (`geo/`) y parámetros `?local=1` / `?cdn=1`;
+- avisos si falta **JSPI** o **WebGL 2**, enlace «Volver al inicio» y nota de la
+  fuente de datos que se está usando.
 
 ## Requisitos para jugar
 
@@ -97,7 +86,7 @@ lleva estos cambios:
 
 - **Motor y port del juego:** bog @ [truffled](https://truffled.lol).
 - **Empaquetado web y ficheros del juego:** [AlexBoops/geometry-dash-webport](https://github.com/AlexBoops/geometry-dash-webport).
-- **Port publicado en itch.io:** [Geometry Dash | Webport by Lollipop](https://theblehlollipop.itch.io/geometry-dash-webport).
+- **Port original publicado en itch.io:** [Geometry Dash | Webport](https://theblehlollipop.itch.io/geometry-dash-webport).
 - **Geometry Dash:** [RobTop Games](https://www.robtopgames.com/). Todos los derechos reservados.
 
 Si eres titular de algún contenido y prefieres que se retire, abre un issue y se quita.
