@@ -88,8 +88,7 @@
   /* -------------------------------------------------------- modo local --- */
 
   var MENSAJE_CDN =
-    'Modo CDN: los ficheros se descargarán del CDN de GitHub. Ejecuta «bash descargar-juego.sh» para tenerlos en local (' +
-    'carpeta geo/).';
+    'Todo listo: los ficheros se cargan del CDN de GitHub (~370 MB la primera vez, después quedan en caché). No hay que descargar ni instalar nada.';
 
   function setLocalStatus(text, isLocal) {
     if (!localStatus) return;
@@ -103,7 +102,7 @@
         var length = parseInt(response.headers.get('Content-Length') || '0', 10);
         if (response.ok && length > 1000000) {
           setLocalStatus(
-            'Modo local listo: los ficheros del juego están en la carpeta geo/, no hará falta el CDN.',
+            'Modo local activo: los ficheros del juego están en la carpeta geo/ de este servidor, así que no hace falta el CDN.',
             true
           );
         } else {

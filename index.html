@@ -148,28 +148,26 @@
       </section>
 
       <section id="ficheros" class="section">
-        <h2 class="section-title">Ficheros del juego (CDN o locales)</h2>
+        <h2 class="section-title">Los ficheros del juego</h2>
         <p>
-          Por defecto el port pide los ficheros al CDN de GitHub (<code>cdn.jsdelivr.net</code>),
-          apuntando al repositorio
+          No hay que descargar ni instalar nada: el port pide el motor y los datos al CDN de GitHub
+          (<code>cdn.jsdelivr.net</code>), apuntando al repositorio
           <a
             href="https://github.com/AlexBoops/geometry-dash-webport"
             target="_blank"
             rel="noopener noreferrer"
             >AlexBoops/geometry-dash-webport</a
-          >. Con eso ya puedes jugar sin descargar nada aparte.
+          >. Esa es la descarga de ~370 MB de la primera partida; después queda en la caché del
+          navegador.
         </p>
         <p>
-          Si quieres tenerlos en tu equipo (para jugar sin CDN o para publicarlos tú), hay un script
-          que los baja a la carpeta <code>geo/</code>:
+          La web está publicada en <strong>GitHub Pages</strong>, así que se abre desde cualquier
+          navegador con solo entrar en la dirección. Si quien la mantiene quiere además tener los
+          ficheros en su servidor (modo sin CDN), el repositorio incluye
+          <code>descargar-juego.sh</code>, que los baja a la carpeta <code>geo/</code> y el port los
+          detecta solo (<code>?local=1</code> / <code>?cdn=1</code> para forzar).
         </p>
-        <pre class="code-block"><code>bash descargar-juego.sh</code></pre>
-        <p>
-          El port detecta solo esa carpeta: verás «ficheros locales» en su pantalla de inicio y ya
-          no tocará el CDN durante la partida. También puedes forzarlo con
-          <code>?local=1</code> o <code>?cdn=1</code>.
-        </p>
-        <p class="status" id="local-status">Comprobando si tienes los ficheros locales…</p>
+        <p class="status" id="local-status">Comprobando de dónde se van a cargar los datos…</p>
       </section>
 
       <section id="creditos" class="section">
